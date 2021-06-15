@@ -1,0 +1,42 @@
+{% load humanize %}
+<div class="table-responsive">
+    <table class="table datatable table-sm">
+        <thead>
+        <tr>
+            {% for campo in campos %}
+                <th style="text-align: left">{{ campo.get_label }}</th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for object in object_list_relatorio %}
+            <tr>
+
+                {% for campo  in campos %}
+                    <td class="{{ campo.css_class }}" {% if campo.css_class == 'mask_moeda' %}
+                        style="text-align: right "{% endif %}>
+                        {% if campo.css_class == 'mask_data' %}
+                            {{ object|get_valor_campo:campo.campo|date:'d/m/Y' }}
+                        {% elif campo.css_class == 'mask_datetime' %}
+                            {{ object|get_valor_campo:campo.campo|date:'d/m/Y H:m' }}
+                        {% elif campo.css_class == 'bool' %}
+                            {% if object|get_valor_campo:campo.campo %}
+                                Ativo
+                            {% else %}
+                                Inativo
+                            {% endif %}
+                        {% elif campo.css_class == 'mask_moeda' %}
+                            {{ object|get_valor_campo:campo.campo|floatformat:2|intcomma|default_if_none:'' }}
+                        {% else %}
+                            {{ object|get_valor_campo:campo.campo|default_if_none:'' }}
+                        {% endif %}
+                    </td>
+                {% endfor %}
+
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+</div>

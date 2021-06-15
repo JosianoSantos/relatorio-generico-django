@@ -1,0 +1,63 @@
+<script type="text/javascript">
+
+    function definirAcaoRelatorio(acao) {
+        if (acao === 'gerar_excel') {
+            $('#acao_relatorio').val('gerar_excel');
+        } else if (acao === 'gerar_pdf') {
+            $('#acao_relatorio').val('gerar_pdf');
+            $('#acao_relatorio').closest('form').attr('target', '_blank')
+        } else if (acao === 'imprimir') {
+            $('#acao_relatorio').val('imprimir');
+            $('#acao_relatorio').closest('form').attr('target', '_blank')
+        } else {
+            $('#acao_relatorio').val(null)
+        }
+
+        // Dá um submit no form após setar os valores
+        $('#acao_relatorio').closest('form').submit()
+    }
+</script>
+
+<div class="{% if class_botoes_busca %}{{ class_botoes_busca }}{% else %}col-sm-4 mt-auto{% endif %}">
+    {# Templatetag que recebe a app e o modelo no include desse html #}
+
+    {% if mostrar_botao_selecionar_campos %}
+        {% modal_seleciona_fields_relatorio request=request app=app modelo=modelo %}
+    {% endif %}
+
+    {% if mostrar_botao_aplicar_filtros %}
+        <button type="button" onclick="definirAcaoRelatorio(null)" class="btn btn-outline-secondary">
+            <i class="fa fa-search"></i> Aplicar filtros
+        </button>
+    {% endif %}
+</div>
+
+<div class="{% if class_botoes_exportacao %}{{ class_botoes_exportacao }}{% else %}col-sm-3 text-right{% endif %}">
+    <br>
+    <a title="Imprimir" data-toggle="tooltip" onclick="definirAcaoRelatorio('imprimir')"
+       class="btn btn-outline-secondary">
+        <i class="fa fa-print"></i>
+    </a>
+
+    <a title="Gerar PDF" data-toggle="tooltip" onclick="definirAcaoRelatorio('gerar_pdf')"
+       class="btn btn-outline-secondary">
+        <i class="fa fa-file-pdf-o"></i>
+    </a>
+
+    <a title="Gerar Excel" data-toggle="tooltip" onclick="definirAcaoRelatorio('gerar_excel')"
+       class="btn btn-outline-secondary">
+        <i class="fa fa-file-excel-o"></i>
+    </a>
+
+    {# Campo onde é setado, via javascript, qual opção foi selecionada (excel, pdf) para ser usado no backend #}
+    <input hidden id="acao_relatorio" name="acao_relatorio" value="">
+
+    {# Usado para saber no backend que está na tela do relatório #}
+    <input hidden id="relatorio" name="relatorio">
+
+
+    <input hidden id="app" name="app" value="{{ app }}">
+
+    <input hidden id="modelo" name="modelo" value="{{ modelo }}">
+
+</div>

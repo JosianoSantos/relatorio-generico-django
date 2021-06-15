@@ -1,0 +1,47 @@
+{% load static %}
+
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalFieldsRelatorio">
+  <i class="fa fa-list"></i> Selecionar campos
+</button>
+
+<div class="modal fade" id="modalFieldsRelatorio" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" style="z-index:2" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Selecione os campos para o relatório </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    {% for field in fields %}
+                        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 form mt-3">
+
+                            <div class="checkbox clip-check check-primary mt-0">
+                                <input class="form-check-input report-field" name="campos" type="checkbox" value="{{ field.name }}" {% if field.checked %} checked {% endif %}" id="{{ field.name }}">
+                                <label for="{{ field.name }}"> {{ field.label }} </label>
+                            </div>
+
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="modal-footer">
+                {% if request.session.usuario_empresa %}
+                <button id="btnGravarReportFieldsUsuarioApp" type="button" class="btn btn-primary" data-app="" data-modelo="" onClick="gravaReportFieldsUsuarioApp('{{ app }}', '{{ modelo }}');" data-url-ajax-gravar-report-fields="{% url 'relatoriobase:grava_report_fields_usuario_app' %}">
+                    <i class="fa fa-list"></i> Gravar configuração
+                </button>
+                <button id="btnRedefinirReportFieldsUsuarioApp" type="button" class="btn btn-secondary" onClick="redefinirReportFieldsUsuarioApp('{{ app }}', '{{ modelo }}');" data-url-ajax-gravar-report-fields="{% url 'relatoriobase:grava_report_fields_usuario_app' %}">
+                    <i class="fa fa-refresh"></i> Redefinir configuração
+                </button>
+                {% else %}
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Fechar</button>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,108 @@
+{% extends "relatoriobase/relatorio_base.html" %}
+{% load static %}
+
+{% block layout_style %}
+    <style type="text/css">
+        @page {
+            size: 29.7cm 21cm;
+            margin-left: 1cm;
+            margin-right: 1cm;
+            margin-top: 3cm;
+            margin-bottom: 2cm;
+
+            @frame header {
+            -pdf-frame-content: page-header;
+            margin-top: 0.3cm;
+            margin-left: 1cm;
+            margin-right: 1cm;
+            margin-bottom: 1cm;
+        }
+
+        @frame footer {
+        -pdf-frame-content:page-footer;
+        bottom: 0cm;
+        margin-left: 1cm;
+        margin-right: 1cm;
+        height: 1cm;
+        }
+        }
+    </style>
+{% endblock %}
+
+{% block extra_style %}
+    <meta charset="utf-8">
+    {% include 'relatoriobase/_styles_genericos.html' %}
+{% endblock %}
+
+
+
+{% block page_header %}
+    <div id="page-header" style="border-bottom: solid 1px #bdbdbd;">
+        <table>
+            <tr>
+                <td style="width: 190px; padding-bottom: 5px">
+                    <img src="{% static 'core/img/logo.jpg' %}" style="width:100%;">
+                </td>
+                <td style="text-align: right">
+                    <h1>
+                        <br>
+                        <strong><span class="fs-xs">RELATÓRIO</span><br>{% block titulo_relatorio %}{% endblock %}</strong><br>
+                    </h1>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <br>
+{% endblock %}
+
+
+<div id="content">
+    {% block content %}
+
+    {% endblock %}
+</div>
+
+{% block page_footer %}
+
+    <div style="border-top: solid; padding-top: 4px;float:left" id="page-footer">
+
+        <div style="display: inline;float: left">
+            Relatório emitido por <b>ERClinic.com.br</b>
+        </div>
+        {#        Alternativa para poder alinhar a div à esquerda #}
+
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <div style="display:inline;float: right">
+            Gerado em {% now "d/m/Y" %} às {% now "H:i" %} - Página
+            <pdf:pagenumber/>
+            de
+            <pdf:pagecount/>
+        </div>
+
+    </div>
+{% endblock %}
